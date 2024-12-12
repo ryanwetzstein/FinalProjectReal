@@ -1,0 +1,104 @@
+﻿@page "/chat"
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.SignalR.Client;
+@inject NavigationManager Navigation
+@implements IAsyncDisposable
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize]
+
+
+<PageTitle>Chat</PageTitle>
+
+<div class="chat-container">
+    <h2 class="chat-title">Real-Time Chat</h2>
+
+    <div class="form-group">
+        <label for="usernameInput">Username:</label>
+        <input id="usernameInput" @bind="userInput" class="form-control" placeholder="Enter your username" />
+    </div>
+
+    <div class="form-group">
+        <label for="messageInput">Message:</label>
+        <input id="messageInput" @bind="messageInput" class="form-control" placeholder="Enter your message" size="50" />
+    </div>
+
+    <button @onclick="Send" class="btn btn-primary" disabled="@(!IsConnected || string.IsNullOrWhiteSpace(messageInput))">Send</button>
+
+    <div class="alert alert-danger mt-3" role="alert" hidden="@IsConnected">
+        Connection lost. Please check your network or refresh the page.
+    </div>
+
+    <hr />
+
+    <ul id="messagesList" class="messages-list" role="list">
+        @foreach (var message in messages)
+        {
+            <li class="message-item">@message</li>
+        }
+    </ul>
+</div>
+
+@code {
+    private HubConnection? hubConnection;
+    private List<string> messages = new();
+    private string userInput = "John Doe"; // Default username
+    private string? messageInput;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            hubConnection = new HubConnectionBuilder()
+                .WithUrl(Navigation.ToAbsoluteUri("/chathub"))
+                .Build();
+
+            hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+            {
+                var encodedMsg = $"{user}: {message}";
+                messages.Add(encodedMsg);
+                InvokeAsync(StateHasChanged);
+            });
+
+            await hubConnection.StartAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error starting connection: {ex.Message}");
+        }
+    }
+
+    private async Task Send()
+    {
+        if (hubConnection is not null)
+        {
+            try
+            {
+                await hubConnection.SendAsync("SendMessage", userInput, messageInput);
+                messageInput = string.Empty; // Clear the input field after sending
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Error sending message: {ex.Message}");
+            }
+        }
+    }
+
+    public bool IsConnected =>
+        hubConnection?.State == HubConnectionState.Connected;
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            try
+            {
+                await hubConnection.DisposeAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Error disposing connection: {ex.Message}");
+            }
+        }
+    }
+}
