@@ -1,11 +1,13 @@
-using FinalProject.Components;
+﻿using FinalProject.Components;
 using FinalProject.Components.Account;
 using FinalProject.Data;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Components.QuickGrid;
 using FinalProject.Hubs;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FinalProject
 {
@@ -14,6 +16,10 @@ namespace FinalProject
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddDbContextFactory<FinalProjectContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("FinalProjectContext") ?? throw new InvalidOperationException("Connection string 'FinalProjectContext' not found.")));
+
+            builder.Services.AddQuickGridEntityFrameworkAdapter();
 
             // Add services to the container.
             builder.Services.AddRazorComponents()
@@ -55,6 +61,7 @@ namespace FinalProject
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+    app.UseMigrationsEndPoint();
             }
 
             app.UseHttpsRedirection();
