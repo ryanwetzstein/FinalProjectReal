@@ -15,5 +15,6 @@ namespace FinalProject.Data
         }
 
         public DbSet<FinalProject.Models.Listing> Listing { get; set; } = default!;
+        public DbSet<FinalProject.Models.Event> Events { get; set; } = default!;
     }
 }
