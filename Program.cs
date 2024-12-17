@@ -55,8 +55,9 @@ namespace FinalProject
             {
                 var services = scope.ServiceProvider;
 
-                SeedData.Initialize(services);
-            }
+                SeedData.InitializeEvent(services);
+				SeedData.InitializeListing(services);
+			}
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
