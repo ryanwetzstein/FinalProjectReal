@@ -9,19 +9,28 @@
 <PageTitle>View Events</PageTitle>
 
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<h1 style="font-family: 'Roboto', sans-serif; font-weight: 700;">Events</h1>
+<h1 style="font-family: 'Roboto', sans-serif; font-weight: 700; text-align: center; text-decoration: underline overline;">EVENTS</h1>
 @foreach (var eventItem in Events)
 {
     <div class="container mt-12">
         <div class="card" style="font-family: 'Roboto', sans-serif;">
             <div class="card-body">
-                <h3 style="font-size: 30px; font-weight: bold;">@eventItem.Title</h3>
+                <h3 style="font-size: 30px; font-weight: bold; color: #1861ac;">@eventItem.Title</h3>
                 <h4 style="font-size: 20px;">@eventItem.Description</h4>
-                <h4 style="font-size: 20px; font-weight: bold">@eventItem.Date   @eventItem.TimeStart - @eventItem.TimeEnd</h4>
+                <h4 style="font-size: 20px; font-weight: bold">@eventItem.Date &nbsp;from&nbsp; @eventItem.TimeStart - @eventItem.TimeEnd</h4>
             </div>
         </div>
     </div>
 }
+
+<AuthorizeView>
+    <Authorized>
+        <form action="/submit" method="POST">
+            <button type="submit" class="btn btn-primary" onclick="window.location.href='/eventitems'; return false;">Event Index</button>
+        </form>
+    </Authorized>
+</AuthorizeView>
+
 @code {
     private FinalProjectContext context = default!;
 
