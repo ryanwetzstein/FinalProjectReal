@@ -6,10 +6,10 @@
 @implements IAsyncDisposable
 @inject IDbContextFactory<FinalProject.Data.FinalProjectContext> DbFactory
 
-<PageTitle>View Events</PageTitle>
+<PageTitle>View Shelters</PageTitle>
 
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<h1 style="font-family: 'Roboto', sans-serif; font-weight: 700; text-align: center; text-decoration: underline overline;">EVENTS</h1>
+<h1 style="font-family: 'Roboto', sans-serif; font-weight: 700; text-align: center; text-decoration: underline overline;">SHELTERS</h1>
 @foreach (var shelterItem in Shelters)
 {
     <div class="container mt-12">
