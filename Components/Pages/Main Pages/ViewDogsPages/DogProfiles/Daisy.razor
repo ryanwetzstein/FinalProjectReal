@@ -1,5 +1,26 @@
 ﻿@page "/profile/daisy"
-<h3>Daisy</h3>
+<h2 class="text-center">Meet Daisy: The Sunshine Pup</h2>
+
+<div class="text-center mt-4">
+    <img src="https://images.unsplash.com/photo-1517423440428-a5a00ad493e8"
+         alt="Daisy"
+         class="img-fluid"
+         style="width: 500px; height: 500px; object-fit: cover;">
+</div>
+
+<div class="container mt-4">
+    <p>
+        Daisy is a 1-year-old Golden Retriever mix with a sunny disposition. She loves belly rubs, running in the park, and making her humans laugh with her goofy antics.
+    </p>
+    <p>
+        Daisy is perfect for anyone looking for a playful and loving companion.
+    </p>
+    <div class="text-center mt-3">
+        <form action="/submit" method="POST">
+            <button type="submit" class="btn btn-primary" onclick="window.location.href='/application-page'; return false;">Submit Application</button>
+        </form>
+    </div>
+</div>
 
 @code {
 

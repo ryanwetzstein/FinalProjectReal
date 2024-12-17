@@ -1,0 +1,52 @@
+﻿@page "/profile/{Id:int}"
+@using Microsoft.EntityFrameworkCore
+@using FinalProject.Models
+@using FinalProject.Data
+@inject IDbContextFactory<FinalProject.Data.FinalProjectContext> DbFactory
+
+<PageTitle>Dog Profile</PageTitle>
+
+<!-- Profile Section -->
+<div class="container mt-4">
+    @if (dog != null)
+    {
+        <h2 class="text-center">Meet @dog.Name</h2>
+        <div class="text-center mt-4">
+            <img src="@dog.ImageUrl" alt="@dog.Name" class="img-fluid" style="width: 500px; height: 500px; object-fit: cover;">
+        </div>
+
+        <div class="container mt-4">
+            <p><strong>Breed:</strong> @dog.Breed</p>
+            <p><strong>Age:</strong> @dog.Age</p>
+            <p><strong>Size:</strong> @dog.Size</p>
+            <p><strong>Location:</strong> @dog.Location</p>
+            <p><strong>Description:</strong> @dog.Description</p>
+            <p><strong>Temperament:</strong> @dog.Temperance</p>
+            <p><strong>Health:</strong> @dog.Health</p>
+
+            <div class="text-center mt-3">
+                <form action="/submit" method="POST">
+                    <button type="submit" class="btn btn-primary" onclick="window.location.href='/application-page'; return false;">Submit Application</button>
+                </form>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Dog not found.</p>
+    }
+</div>
+
+@code {
+    [Parameter] public int Id { get; set; }
+    private FinalProjectContext context = default!;
+    private Listing? dog;
+
+    protected override async Task OnInitializedAsync()
+    {
+        context = DbFactory.CreateDbContext();
+        dog = await context.Listing.FirstOrDefaultAsync(d => d.Id == Id);
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}
