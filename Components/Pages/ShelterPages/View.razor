@@ -22,6 +22,18 @@
         </div>
     </div>
 }
+
+<br />
+<br />
+<br />
+<br />
+<AuthorizeView>
+    <Authorized>
+        <form action="/submit" method="POST">
+            <button type="submit" class="btn btn-primary" onclick="window.location.href='/shelters'; return false;">Shelter Settings</button>
+        </form>
+    </Authorized>
+</AuthorizeView>
 @code {
     private FinalProjectContext context = default!;
 
