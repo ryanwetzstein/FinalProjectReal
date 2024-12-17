@@ -338,3 +338,44 @@ button {
     padding: 10px;
     font-size: 16px;
 }
+
+/* Style the container */
+.accordion-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Style the accordion button */
+.accordion {
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+/* Style for when the accordion button is active */
+.accordion:hover, .active {
+    background-color: #0056b3;
+}
+
+/* Style the panel (content) */
+.panel {
+    padding: 0 18px;
+    background-color: #f1f1f1;
+    overflow: hidden;
+    margin-bottom: 10px;
+    display: none; /* Initially hidden */
+    transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+}
+
+.panel[style*="display: block"] {
+    max-height: 1000px; /* Arbitrary large number for expansion */
+    padding: 18px; /* Padding when expanded */
+}
