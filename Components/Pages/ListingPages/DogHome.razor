@@ -161,11 +161,14 @@
             <PropertyColumn Property="listing => listing.Temperance" />
             <PropertyColumn Property="listing => listing.Health" />
 
-            <!-- Action Buttons for each listing row -->
             <TemplateColumn Context="listing">
-                <a href="@($"listings/edit?id={listing.Id}")" class="btn btn-warning btn-sm">Edit</a>
-                <a href="@($"listings/details?id={listing.Id}")" class="btn btn-info btn-sm">Details</a>
-                <a href="@($"listings/delete?id={listing.Id}")" class="btn btn-danger btn-sm">Delete</a>
+                <AuthorizeView>
+                    <Authorized>
+                        <a href="@($"listings/edit?id={listing.Id}")" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="@($"listings/details?id={listing.Id}")" class="btn btn-info btn-sm">Details</a>
+                        <a href="@($"listings/delete?id={listing.Id}")" class="btn btn-danger btn-sm">Delete</a>
+                    </Authorized>
+                </AuthorizeView>
             </TemplateColumn>
         </QuickGrid>
     </div>

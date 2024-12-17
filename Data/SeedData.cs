@@ -1,15 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using FinalProject.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace FinalProject.Data
 {
-    public class SeedData
-    {
-        public static void InitializeEvent(IServiceProvider serviceProvider)
-        {
-            using var context = new FinalProjectContext(
-                serviceProvider.GetRequiredService<
-                    DbContextOptions<FinalProjectContext>>());
+	public class SeedData
+	{
+		public static void InitializeEvent(IServiceProvider serviceProvider)
+		{
+			using var context = new FinalProjectContext(
+				serviceProvider.GetRequiredService<
+					DbContextOptions<FinalProjectContext>>());
 
 			if (context == null || context.EventItem == null)
 			{
@@ -171,48 +172,49 @@ namespace FinalProject.Data
 			context.SaveChanges();
 		}
 
-        public static void InitializeShelter(IServiceProvider serviceProvider)
-        {
-            using var context = new FinalProjectContext(
-                serviceProvider.GetRequiredService<
-                    DbContextOptions<FinalProjectContext>>());
+		public static void InitializeShelter(IServiceProvider serviceProvider)
+		{
+			using var context = new FinalProjectContext(
+				serviceProvider.GetRequiredService<
+					DbContextOptions<FinalProjectContext>>());
 
-            if (context == null || context.Shelter == null)
-            {
-                throw new NullReferenceException(
-                    "Null FinalProjectContext or Shelter DbSet");
-            }
+			if (context == null || context.Shelter == null)
+			{
+				throw new NullReferenceException(
+					"Null FinalProjectContext or Shelter DbSet");
+			}
 
-            if (context.Shelter.Any())
-            {
-                return;
-            }
+			if (context.Shelter.Any())
+			{
+				return;
+			}
 
-            context.Shelter.AddRange(
-                new Shelter
-                {
-                    Name = "FurEver Friends Animal Shelter",
-                    Email = "info@fureverfriends.org",
-                    PhoneNumber = "(555) 987-6543"
-                },
+			context.Shelter.AddRange(
+				new Shelter
+				{
+					Name = "FurEver Friends Animal Shelter",
+					Email = "info@fureverfriends.org",
+					PhoneNumber = "(555) 987-6543"
+				},
 
-                new Shelter
-                {
-                    Name = "The Barking Lot Animal Rescue",
-                    Email = "contact@barkinglotrescue.org",
-                    PhoneNumber = "(555) 456-7890"
-                },
+				new Shelter
+				{
+					Name = "The Barking Lot Animal Rescue",
+					Email = "contact@barkinglotrescue.org",
+					PhoneNumber = "(555) 456-7890"
+				},
 
 
-                new Shelter
-                {
-                    Name = "Whiskers & Tails Animal Shelter",
-                    Email = "help@whiskersandtails.org",
-                    PhoneNumber = "(555) 321-4321"
-                }
-                );
+				new Shelter
+				{
+					Name = "Whiskers & Tails Animal Shelter",
+					Email = "help@whiskersandtails.org",
+					PhoneNumber = "(555) 321-4321"
+				}
+				);
 
-            context.SaveChanges();
-        }
-    }
+			context.SaveChanges();
+		}
+
+	}
 }
