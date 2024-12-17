@@ -57,7 +57,8 @@ namespace FinalProject
 
                 SeedData.InitializeEvent(services);
                 SeedData.InitializeShelter(services);
-            }
+				SeedData.InitializeListing(services);
+			}
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
