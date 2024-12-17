@@ -4,69 +4,90 @@
 @inject IDbContextFactory<FinalProject.Data.FinalProjectContext> DbFactory
 @inject NavigationManager NavigationManager
 
-<PageTitle>Create</PageTitle>
+<PageTitle>Create Listing</PageTitle>
 
-<h1>Create</h1>
-
-<h2>Listing</h2>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <EditForm method="post" Model="Listing" OnValidSubmit="AddListing" FormName="create" Enhance>
-            <DataAnnotationsValidator />
-            <ValidationSummary class="text-danger" role="alert"/>
-            <div class="mb-3">
-                <label for="name" class="form-label">Name:</label> 
-                <InputText id="name" @bind-Value="Listing.Name" class="form-control" aria-required="true"/> 
-                <ValidationMessage For="() => Listing.Name" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="breed" class="form-label">Breed:</label> 
-                <InputText id="breed" @bind-Value="Listing.Breed" class="form-control" aria-required="true"/> 
-                <ValidationMessage For="() => Listing.Breed" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="age" class="form-label">Age:</label> 
-                <InputNumber id="age" @bind-Value="Listing.Age" class="form-control" aria-required="true"/> 
-                <ValidationMessage For="() => Listing.Age" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="size" class="form-label">Size:</label> 
-                <InputText id="size" @bind-Value="Listing.Size" class="form-control" aria-required="true"/> 
-                <ValidationMessage For="() => Listing.Size" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="location" class="form-label">Location:</label> 
-                <InputText id="location" @bind-Value="Listing.Location" class="form-control" aria-required="true"/> 
-                <ValidationMessage For="() => Listing.Location" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="description" class="form-label">Description:</label> 
-                <InputText id="description" @bind-Value="Listing.Description" class="form-control" aria-required="true"/> 
-                <ValidationMessage For="() => Listing.Description" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="imageurl" class="form-label">ImageUrl:</label> 
-                <InputText id="imageurl" @bind-Value="Listing.ImageUrl" class="form-control" aria-required="true"/> 
-                <ValidationMessage For="() => Listing.ImageUrl" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="temperance" class="form-label">Temperance:</label> 
-                <InputText id="temperance" @bind-Value="Listing.Temperance" class="form-control" /> 
-                <ValidationMessage For="() => Listing.Temperance" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="health" class="form-label">Health:</label> 
-                <InputText id="health" @bind-Value="Listing.Health" class="form-control" /> 
-                <ValidationMessage For="() => Listing.Health" class="text-danger" /> 
-            </div>        
-            <button type="submit" class="btn btn-primary">Create</button>
-        </EditForm>
+<!-- Blue and Black Navbar -->
+<div class="top-row ps-3 navbar navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Doggy Domain</a>
     </div>
 </div>
 
-<div>
-    <a href="/listings">Back to List</a>
+<!-- Main Container -->
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Create New Listing</h1>
+
+    <!-- Form Start -->
+    <EditForm method="post" Model="Listing" OnValidSubmit="AddListing" FormName="create" Enhance>
+        <DataAnnotationsValidator />
+        <ValidationSummary class="text-danger" role="alert" />
+
+        <!-- Form Inputs (Styled with Bootstrap Classes) -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="name" class="form-label">Name:</label>
+                <InputText id="name" @bind-Value="Listing.Name" class="form-control" aria-required="true" />
+                <ValidationMessage For="() => Listing.Name" class="text-danger" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="breed" class="form-label">Breed:</label>
+                <InputText id="breed" @bind-Value="Listing.Breed" class="form-control" aria-required="true" />
+                <ValidationMessage For="() => Listing.Breed" class="text-danger" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="age" class="form-label">Age:</label>
+                <InputNumber id="age" @bind-Value="Listing.Age" class="form-control" aria-required="true" />
+                <ValidationMessage For="() => Listing.Age" class="text-danger" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="size" class="form-label">Size:</label>
+                <InputText id="size" @bind-Value="Listing.Size" class="form-control" aria-required="true" />
+                <ValidationMessage For="() => Listing.Size" class="text-danger" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="location" class="form-label">Location:</label>
+                <InputText id="location" @bind-Value="Listing.Location" class="form-control" aria-required="true" />
+                <ValidationMessage For="() => Listing.Location" class="text-danger" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="description" class="form-label">Description:</label>
+                <InputText id="description" @bind-Value="Listing.Description" class="form-control" aria-required="true" />
+                <ValidationMessage For="() => Listing.Description" class="text-danger" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="imageurl" class="form-label">Image URL:</label>
+                <InputText id="imageurl" @bind-Value="Listing.ImageUrl" class="form-control" aria-required="true" />
+                <ValidationMessage For="() => Listing.ImageUrl" class="text-danger" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="temperance" class="form-label">Temperance:</label>
+                <InputText id="temperance" @bind-Value="Listing.Temperance" class="form-control" />
+                <ValidationMessage For="() => Listing.Temperance" class="text-danger" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="health" class="form-label">Health:</label>
+                <InputText id="health" @bind-Value="Listing.Health" class="form-control" />
+                <ValidationMessage For="() => Listing.Health" class="text-danger" />
+            </div>
+
+            <div class="col-md-12 text-center mb-4">
+                <button type="submit" class="btn btn-primary btn-lg">Create Listing</button>
+            </div>
+        </div>
+    </EditForm>
+    <!-- End Form -->
+    <!-- Back Link -->
+    <div class="text-center mt-4">
+        <a href="/dog" class="btn btn-secondary btn-sm">Back to Listings</a>
+    </div>
 </div>
 
 @code {
@@ -79,6 +100,6 @@
         using var context = DbFactory.CreateDbContext();
         context.Listing.Add(Listing);
         await context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/listings");
+        NavigationManager.NavigateTo("/dog");
     }
 }

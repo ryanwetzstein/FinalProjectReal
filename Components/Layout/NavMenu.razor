@@ -74,6 +74,10 @@
             <a href="policy" class="about-us-link">Policy</a>
         </div>
 
+        <div class="nav-item px-4">
+            <a href="/eventitems/view" class="about-us-link">Events</a>
+        </div>
+
         <AuthorizeView>
             <Authorized>
                 <div class="nav-item px-4">
@@ -95,11 +99,6 @@
                 </div>
             </Authorized>
             <NotAuthorized>
-                <!-- <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Register">
-                        <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Register
-                    </NavLink>
-                </div> -->
 
                 <div class="nav-item px-4">
                     <a href="Account/Register" class="about-us-link">Register</a>
@@ -108,14 +107,7 @@
                 <div class="nav-item px-4">
                     <a href="Account/Login" class="about-us-link">Login</a>
                 </div>
-                <!--
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Login">
-                        <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Login
-                    </NavLink>
-                </div>
-                -->
-               
+
             </NotAuthorized>
         </AuthorizeView>
         <style>
@@ -149,13 +141,13 @@
                 }
         </style>
     </nav>
-@*     <br /><br /><br /><br /><br />
+    @*     <br /><br /><br /><br /><br />
     <br /><br /><br /><br /><br />
     <br /><br /><br /><br /><br />
     <div class="top-row px-4">
         <a href="/Aboutus" class="about-us-link">About Us</a>
     </div> *@
-    
+
     <style>
         .top-row {
             text-align: center;

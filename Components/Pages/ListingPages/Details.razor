@@ -6,41 +6,63 @@
 
 <PageTitle>Details</PageTitle>
 
-<h1>Details</h1>
+<!-- Blue and Black Navbar -->
+<div class="top-row ps-3 navbar navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Doggy Domain</a>
+    </div>
+</div>
 
-<div>
-    <h2>Listing</h2>
-    <hr />
-    @if (listing is null)
-    {
-        <p><em>Loading...</em></p>
-    }
-    else {
-        <dl class="row">
-            <dt class="col-sm-2">Name</dt>
-            <dd class="col-sm-10">@listing.Name</dd>
-            <dt class="col-sm-2">Breed</dt>
-            <dd class="col-sm-10">@listing.Breed</dd>
-            <dt class="col-sm-2">Age</dt>
-            <dd class="col-sm-10">@listing.Age</dd>
-            <dt class="col-sm-2">Size</dt>
-            <dd class="col-sm-10">@listing.Size</dd>
-            <dt class="col-sm-2">Location</dt>
-            <dd class="col-sm-10">@listing.Location</dd>
-            <dt class="col-sm-2">Description</dt>
-            <dd class="col-sm-10">@listing.Description</dd>
-            <dt class="col-sm-2">ImageUrl</dt>
-            <dd class="col-sm-10">@listing.ImageUrl</dd>
-            <dt class="col-sm-2">Temperance</dt>
-            <dd class="col-sm-10">@listing.Temperance</dd>
-            <dt class="col-sm-2">Health</dt>
-            <dd class="col-sm-10">@listing.Health</dd>
-        </dl>
-        <div>
-            <a href="@($"/listings/edit?id={listing.Id}")">Edit</a> |
-            <a href="@($"/listings")">Back to List</a>
+<!-- Main Container -->
+<div class="container mt-5">
+
+    <!-- Title -->
+    <h1 class="text-center text-primary mb-4">Listing Details</h1>
+
+    <!-- Details Section -->
+    <div class="card shadow-lg">
+        <div class="card-body">
+            @if (listing is null)
+            {
+                <p><em>Loading...</em></p>
+            }
+            else
+            {
+                <!-- Listing Details Displayed with Clean Layout -->
+                <h4 class="mb-4">Listing Information</h4>
+                <dl class="row">
+                    <dt class="col-sm-3 text-secondary">Name:</dt>
+                    <dd class="col-sm-9">@listing.Name</dd>
+                    <dt class="col-sm-3 text-secondary">Breed:</dt>
+                    <dd class="col-sm-9">@listing.Breed</dd>
+                    <dt class="col-sm-3 text-secondary">Age:</dt>
+                    <dd class="col-sm-9">@listing.Age</dd>
+                    <dt class="col-sm-3 text-secondary">Size:</dt>
+                    <dd class="col-sm-9">@listing.Size</dd>
+                    <dt class="col-sm-3 text-secondary">Location:</dt>
+                    <dd class="col-sm-9">@listing.Location</dd>
+                    <dt class="col-sm-3 text-secondary">Description:</dt>
+                    <dd class="col-sm-9">@listing.Description</dd>
+                    <dt class="col-sm-3 text-secondary">Image URL:</dt>
+                    <dd class="col-sm-9">@listing.ImageUrl</dd>
+                    <dt class="col-sm-3 text-secondary">Temperance:</dt>
+                    <dd class="col-sm-9">@listing.Temperance</dd>
+                    <dt class="col-sm-3 text-secondary">Health:</dt>
+                    <dd class="col-sm-9">@listing.Health</dd>
+                </dl>
+
+                <!-- Action Buttons (Edit and Back to List) -->
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="@($"/listings/edit?id={listing.Id}")" class="btn btn-warning btn-lg">
+                        <i class="bi bi-pencil-square me-2"></i> Edit Listing
+                    </a>
+                    <a href="/dog" class="btn btn-secondary btn-lg">
+                        <i class="bi bi-arrow-left-circle me-2"></i> Back to List
+                    </a>
+                </div>
+            }
         </div>
-    }
+    </div>
 </div>
 
 @code {
