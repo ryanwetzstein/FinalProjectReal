@@ -4,33 +4,57 @@
 @inject IDbContextFactory<FinalProject.Data.FinalProjectContext> DbFactory
 @inject NavigationManager NavigationManager
 
-<PageTitle>Details</PageTitle>
+<PageTitle>Event Item Details</PageTitle>
 
-<h1>Details</h1>
+<!-- Blue and Black Navbar -->
+<div class="top-row ps-3 navbar navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Doggy Domain</a>
+    </div>
+</div>
 
-<div>
-    <h2>EventItem</h2>
-    <hr />
+<!-- Main Container -->
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Event Item Details</h1>
+
+    <!-- Event Item Details -->
     @if (eventitem is null)
     {
         <p><em>Loading...</em></p>
     }
-    else {
-        <dl class="row">
-            <dt class="col-sm-2">Title</dt>
-            <dd class="col-sm-10">@eventitem.Title</dd>
-            <dt class="col-sm-2">Description</dt>
-            <dd class="col-sm-10">@eventitem.Description</dd>
-            <dt class="col-sm-2">Date</dt>
-            <dd class="col-sm-10">@eventitem.Date</dd>
-            <dt class="col-sm-2">TimeStart</dt>
-            <dd class="col-sm-10">@eventitem.TimeStart</dd>
-            <dt class="col-sm-2">TimeEnd</dt>
-            <dd class="col-sm-10">@eventitem.TimeEnd</dd>
-        </dl>
-        <div>
-            <a href="@($"/eventitems/edit?id={eventitem.Id}")">Edit</a> |
-            <a href="@($"/eventitems")">Back to List</a>
+    else
+    {
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <h4>Title</h4>
+                <p>@eventitem.Title</p>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <h4>Description</h4>
+                <p>@eventitem.Description</p>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <h4>Date</h4>
+                <p>@eventitem.Date</p>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <h4>Time Start</h4>
+                <p>@eventitem.TimeStart</p>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <h4>Time End</h4>
+                <p>@eventitem.TimeEnd</p>
+            </div>
+        </div>
+
+        <!-- Edit and Back Links -->
+        <div class="text-center mt-4">
+            <a href="@($"/eventitems/edit?id={eventitem.Id}")" class="btn btn-primary btn-sm">Edit</a> |
+            <a href="/eventitems" class="btn btn-secondary btn-sm">Back to List</a>
         </div>
     }
 </div>

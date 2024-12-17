@@ -4,43 +4,62 @@
 @inject IDbContextFactory<FinalProject.Data.FinalProjectContext> DbFactory
 @inject NavigationManager NavigationManager
 
-<PageTitle>Delete</PageTitle>
+<PageTitle>Delete Event Item</PageTitle>
 
-<h1>Delete</h1>
+<!-- Blue and Black Navbar -->
+<div class="top-row ps-3 navbar navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Doggy Domain</a>
+    </div>
+</div>
 
-<p>Are you sure you want to delete this?</p>
-<div>
-    <h2>EventItem</h2>
-    <hr />
+<!-- Main Container -->
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Delete Event Item</h1>
+
+    <p class="text-center">Are you sure you want to delete this event item?</p>
+
+    <!-- Event Item Details -->
     @if (eventitem is null)
     {
         <p><em>Loading...</em></p>
     }
-    else {
-        <dl class="row">
-            <dt class="col-sm-2">Title</dt>
-            <dd class="col-sm-10">@eventitem.Title</dd>
-        </dl>
-        <dl class="row">
-            <dt class="col-sm-2">Description</dt>
-            <dd class="col-sm-10">@eventitem.Description</dd>
-        </dl>
-        <dl class="row">
-            <dt class="col-sm-2">Date</dt>
-            <dd class="col-sm-10">@eventitem.Date</dd>
-        </dl>
-        <dl class="row">
-            <dt class="col-sm-2">TimeStart</dt>
-            <dd class="col-sm-10">@eventitem.TimeStart</dd>
-        </dl>
-        <dl class="row">
-            <dt class="col-sm-2">TimeEnd</dt>
-            <dd class="col-sm-10">@eventitem.TimeEnd</dd>
-        </dl>
-        <EditForm method="post" Model="eventitem" OnValidSubmit="DeleteEventItem" FormName="delete" Enhance>
-            <button type="submit" class="btn btn-danger" disabled="@(eventitem is null)">Delete</button> |
-            <a href="/eventitems">Back to List</a>
-        </EditForm>
+    else
+    {
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <h4>Title</h4>
+                <p>@eventitem.Title</p>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <h4>Description</h4>
+                <p>@eventitem.Description</p>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <h4>Date</h4>
+                <p>@eventitem.Date</p>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <h4>Time Start</h4>
+                <p>@eventitem.TimeStart</p>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <h4>Time End</h4>
+                <p>@eventitem.TimeEnd</p>
+            </div>
+        </div>
+
+        <!-- Delete Button and Back Link -->
+        <div class="text-center mt-4">
+            <EditForm method="post" Model="eventitem" OnValidSubmit="DeleteEventItem" FormName="delete" Enhance>
+                <button type="submit" class="btn btn-danger" disabled="@(eventitem is null)">Delete</button> |
+                <a href="/eventitems" class="btn btn-secondary btn-sm">Back to List</a>
+            </EditForm>
+        </div>
     }
 </div>
 
