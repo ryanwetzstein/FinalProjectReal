@@ -1,10 +1,10 @@
-﻿@page "/listings/delete"
+﻿@page "/eventitems/create"
 @using Microsoft.EntityFrameworkCore
 @using FinalProject.Models
 @inject IDbContextFactory<FinalProject.Data.FinalProjectContext> DbFactory
 @inject NavigationManager NavigationManager
 
-<PageTitle>Delete Listing</PageTitle>
+<PageTitle>Create Event Item</PageTitle>
 
 <!-- Blue and Black Navbar -->
 <div class="top-row ps-3 navbar navbar-dark bg-primary">
@@ -15,101 +15,75 @@
 
 <!-- Main Container -->
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Delete Listing</h1>
+    <h1 class="text-center mb-4">Create Event Item</h1>
 
-    <p class="text-center">Are you sure you want to delete this listing?</p>
+    <h2 class="text-center">Event Item Details</h2>
+    <hr />
 
-    <!-- Listing Details -->
-    <div class="card shadow-sm">
-        <div class="card-body">
-            @if (listing is null)
-            {
-                <p><em>Loading...</em></p>
-            }
-            else
-            {
-                <!-- Listing details are presented in a clean format -->
-                <h2 class="text-center mb-4">Listing Details</h2>
+    <!-- Form Container -->
+    <div class="row justify-content-center">
+        <div class="col-md-6">
 
-                <dl class="row">
-                    <dt class="col-sm-3">Name</dt>
-                    <dd class="col-sm-9">@listing.Name</dd>
-                </dl>
-                <dl class="row">
-                    <dt class="col-sm-3">Breed</dt>
-                    <dd class="col-sm-9">@listing.Breed</dd>
-                </dl>
-                <dl class="row">
-                    <dt class="col-sm-3">Age</dt>
-                    <dd class="col-sm-9">@listing.Age</dd>
-                </dl>
-                <dl class="row">
-                    <dt class="col-sm-3">Size</dt>
-                    <dd class="col-sm-9">@listing.Size</dd>
-                </dl>
-                <dl class="row">
-                    <dt class="col-sm-3">Location</dt>
-                    <dd class="col-sm-9">@listing.Location</dd>
-                </dl>
-                <dl class="row">
-                    <dt class="col-sm-3">Description</dt>
-                    <dd class="col-sm-9">@listing.Description</dd>
-                </dl>
-                <dl class="row">
-                    <dt class="col-sm-3">Image URL</dt>
-                    <dd class="col-sm-9">@listing.ImageUrl</dd>
-                </dl>
-                <dl class="row">
-                    <dt class="col-sm-3">Temperance</dt>
-                    <dd class="col-sm-9">@listing.Temperance</dd>
-                </dl>
-                <dl class="row">
-                    <dt class="col-sm-3">Health</dt>
-                    <dd class="col-sm-9">@listing.Health</dd>
-                </dl>
+            <EditForm method="post" Model="EventItem" OnValidSubmit="AddEventItem" FormName="create" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary class="text-danger" role="alert" />
 
-                <!-- Delete Form -->
-                <EditForm method="post" Model="listing" OnValidSubmit="DeleteListing" FormName="delete" Enhance>
-                    <div class="d-flex justify-content-center mt-4">
-                        <button type="submit" class="btn btn-danger btn-lg" disabled="@(listing is null)">
-                            <i class="bi bi-trash me-2"></i> Delete Listing
-                        </button>
-                    </div>
-                </EditForm>
-            }
+                <!-- Title -->
+                <div class="mb-3 text-center">
+                    <label for="title" class="form-label">Title:</label>
+                    <InputText id="title" @bind-Value="EventItem.Title" class="form-control" style="max-width: 80%;" aria-required="true" />
+                    <ValidationMessage For="() => EventItem.Title" class="text-danger" />
+                </div>
+
+                <!-- Description -->
+                <div class="mb-3 text-center">
+                    <label for="description" class="form-label">Description:</label>
+                    <InputText id="description" @bind-Value="EventItem.Description" class="form-control" style="max-width: 80%;" aria-required="true" />
+                    <ValidationMessage For="() => EventItem.Description" class="text-danger" />
+                </div>
+
+                <!-- Date -->
+                <div class="mb-3 text-center">
+                    <label for="date" class="form-label">Date:</label>
+                    <InputText id="date" @bind-Value="EventItem.Date" class="form-control" style="max-width: 80%;" aria-required="true" />
+                    <ValidationMessage For="() => EventItem.Date" class="text-danger" />
+                </div>
+
+                <!-- Time Start -->
+                <div class="mb-3 text-center">
+                    <label for="timestart" class="form-label">Time Start:</label>
+                    <InputText id="timestart" @bind-Value="EventItem.TimeStart" class="form-control" style="max-width: 80%;" aria-required="true" />
+                    <ValidationMessage For="() => EventItem.TimeStart" class="text-danger" />
+                </div>
+
+                <!-- Time End -->
+                <div class="mb-3 text-center">
+                    <label for="timeend" class="form-label">Time End:</label>
+                    <InputText id="timeend" @bind-Value="EventItem.TimeEnd" class="form-control" style="max-width: 80%;" aria-required="true" />
+                    <ValidationMessage For="() => EventItem.TimeEnd" class="text-danger" />
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary w-100">Create</button>
+            </EditForm>
         </div>
     </div>
 
     <!-- Back Link -->
     <div class="text-center mt-4">
-        <a href="/dog" class="btn btn-secondary btn-sm">
-            <i class="bi bi-arrow-left-circle me-2"></i> Back to Listings
-        </a>
+        <a href="/eventitems" class="btn btn-secondary btn-sm">Back to List</a>
     </div>
 </div>
 
 @code {
-    private Listing? listing;
+    [SupplyParameterFromForm]
+    private EventItem EventItem { get; set; } = new();
 
-    [SupplyParameterFromQuery]
-    private int Id { get; set; }
-
-    protected override async Task OnInitializedAsync()
+    private async Task AddEventItem()
     {
         using var context = DbFactory.CreateDbContext();
-        listing = await context.Listing.FirstOrDefaultAsync(m => m.Id == Id);
-
-        if (listing is null)
-        {
-            NavigationManager.NavigateTo("notfound");
-        }
-    }
-
-    private async Task DeleteListing()
-    {
-        using var context = DbFactory.CreateDbContext();
-        context.Listing.Remove(listing!);
+        context.EventItem.Add(EventItem);
         await context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/dog");
+        NavigationManager.NavigateTo("/eventitems");
     }
 }
