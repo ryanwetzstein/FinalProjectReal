@@ -2,6 +2,8 @@
 @using Microsoft.EntityFrameworkCore
 @using FinalProject.Models
 @using FinalProject.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<FinalProject.Data.FinalProjectContext> DbFactory
 
 <PageTitle>View Dogs</PageTitle>
 
@@ -16,7 +18,7 @@
 <!-- Container for Grid with 3 Dogs -->
 <div class="container mt-4">
     <div class="row">
-        @foreach (var dog in dogs)
+        @foreach (var dog in Listings)
         {
             <div class="col-md-4 mb-4">
                 <div class="card">
@@ -24,7 +26,7 @@
                     <img src="@dog.ImageUrl" class="card-img-top" alt="@dog.Name" style="width: 250px; height: 250px; object-fit: cover;">
                     <div class="card-body text-center">
                         <h5 class="card-title">@dog.Name</h5>
-                        <a href="@dog.ProfileUrl" class="btn btn-primary">View Profile</a>
+                        <a href="/profile/confuscious" class="btn btn-primary">View Profile</a>
                     </div>
                 </div>
             </div>
@@ -34,41 +36,42 @@
 
 @code {
     // List of dogs to loop through
-    private List<DogProfile> dogs = new List<DogProfile>
+    // private List<DogProfile> dogs = new List<DogProfile>
+    // {
+    //     new DogProfile
+    //     {
+    //         Name = "Confuscious",
+    //         ImageUrl = "https:www.boredpanda.com/blog/wp-content/uploads/2023/04/644a230e3f5d4_l7ink8py2vta1__700.jpg",
+    //         ProfileUrl = "/profile/confuscious"
+    //     },
+    //     new DogProfile
+    //     {
+    //         Name = "Pubert",
+    //         ImageUrl = "https:images.squarespace-cdn.com/content/v1/597cbe61f14aa1fbe78b4821/1567103219792-B73ICD6B7HE0G7QZXDN9/dog+trainer+norman+oklahoma.jpg",
+    //         ProfileUrl = "/profile/pubert"
+    //     },
+    //     new DogProfile
+    //     {
+    //         Name = "Chiquito",
+    //         ImageUrl = "https:images.saymedia-content.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MjA2NjY5MjQ4Mzg1MjYyNzk2/why-would-a-house-trained-dog-start-pooping-in-the-house.jpg",
+    //         ProfileUrl = "/profile/chiquito"
+    //     }
+    // };
+
+    private FinalProjectContext context = default!;
+
+    private List<Listing> Listings { get; set; } = new List<Listing>();
+
+    protected override async Task OnInitializedAsync()
     {
-        new DogProfile
-        {
-            Name = "Confuscious",
-            ImageUrl = "https://www.boredpanda.com/blog/wp-content/uploads/2023/04/644a230e3f5d4_l7ink8py2vta1__700.jpg",
-            ProfileUrl = "/profile/confuscious"
-        },
-        new DogProfile
-        {
-            Name = "Pubert",
-            ImageUrl = "https://images.squarespace-cdn.com/content/v1/597cbe61f14aa1fbe78b4821/1567103219792-B73ICD6B7HE0G7QZXDN9/dog+trainer+norman+oklahoma.jpg",
-            ProfileUrl = "/profile/pubert"
-        },
-        new DogProfile
-        {
-            Name = "Chiquito",
-            ImageUrl = "https://images.saymedia-content.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MjA2NjY5MjQ4Mzg1MjYyNzk2/why-would-a-house-trained-dog-start-pooping-in-the-house.jpg",
-            ProfileUrl = "/profile/chiquito"
-        }
-    };
-    // private List<DogProfile> dogsNew = new List<DogProfile>();
-    // private Listing? listing;
+        // Fetch all events from the database
+        Listings = await context.Listing.ToListAsync();
+    }
 
-    // private FinalProjectContext context = default!;
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
 
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     Fetch all events from the database
-    //     dogsNew = await context.Listing.ToListAsync();
-    // }
-    // protected override void OnInitialized()
-    // {
-    //     context = DbFactory.CreateDbContext();
-    // }
-
-    //public async ValueTask DisposeAsync() => await context.DisposeAsync();
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
 }
