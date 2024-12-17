@@ -4,60 +4,88 @@
 @inject IDbContextFactory<FinalProject.Data.FinalProjectContext> DbFactory
 @inject NavigationManager NavigationManager
 
-<PageTitle>Delete</PageTitle>
+<PageTitle>Delete Listing</PageTitle>
 
-<h1>Delete</h1>
+<!-- Blue and Black Navbar -->
+<div class="top-row ps-3 navbar navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Doggy Domain</a>
+    </div>
+</div>
 
-<p>Are you sure you want to delete this?</p>
-<div>
-    <h2>Listing</h2>
-    <hr />
-    @if (listing is null)
-    {
-        <p><em>Loading...</em></p>
-    }
-    else {
-        <dl class="row">
-            <dt class="col-sm-2">Name</dt>
-            <dd class="col-sm-10">@listing.Name</dd>
-        </dl>
-        <dl class="row">
-            <dt class="col-sm-2">Breed</dt>
-            <dd class="col-sm-10">@listing.Breed</dd>
-        </dl>
-        <dl class="row">
-            <dt class="col-sm-2">Age</dt>
-            <dd class="col-sm-10">@listing.Age</dd>
-        </dl>
-        <dl class="row">
-            <dt class="col-sm-2">Size</dt>
-            <dd class="col-sm-10">@listing.Size</dd>
-        </dl>
-        <dl class="row">
-            <dt class="col-sm-2">Location</dt>
-            <dd class="col-sm-10">@listing.Location</dd>
-        </dl>
-        <dl class="row">
-            <dt class="col-sm-2">Description</dt>
-            <dd class="col-sm-10">@listing.Description</dd>
-        </dl>
-        <dl class="row">
-            <dt class="col-sm-2">ImageUrl</dt>
-            <dd class="col-sm-10">@listing.ImageUrl</dd>
-        </dl>
-        <dl class="row">
-            <dt class="col-sm-2">Temperance</dt>
-            <dd class="col-sm-10">@listing.Temperance</dd>
-        </dl>
-        <dl class="row">
-            <dt class="col-sm-2">Health</dt>
-            <dd class="col-sm-10">@listing.Health</dd>
-        </dl>
-        <EditForm method="post" Model="listing" OnValidSubmit="DeleteListing" FormName="delete" Enhance>
-            <button type="submit" class="btn btn-danger" disabled="@(listing is null)">Delete</button> |
-            <a href="/listings">Back to List</a>
-        </EditForm>
-    }
+<!-- Main Container -->
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Delete Listing</h1>
+
+    <p class="text-center">Are you sure you want to delete this listing?</p>
+
+    <!-- Listing Details -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            @if (listing is null)
+            {
+                <p><em>Loading...</em></p>
+            }
+            else
+            {
+                <!-- Listing details are presented in a clean format -->
+                <h2 class="text-center mb-4">Listing Details</h2>
+
+                <dl class="row">
+                    <dt class="col-sm-3">Name</dt>
+                    <dd class="col-sm-9">@listing.Name</dd>
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-3">Breed</dt>
+                    <dd class="col-sm-9">@listing.Breed</dd>
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-3">Age</dt>
+                    <dd class="col-sm-9">@listing.Age</dd>
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-3">Size</dt>
+                    <dd class="col-sm-9">@listing.Size</dd>
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-3">Location</dt>
+                    <dd class="col-sm-9">@listing.Location</dd>
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-3">Description</dt>
+                    <dd class="col-sm-9">@listing.Description</dd>
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-3">Image URL</dt>
+                    <dd class="col-sm-9">@listing.ImageUrl</dd>
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-3">Temperance</dt>
+                    <dd class="col-sm-9">@listing.Temperance</dd>
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-3">Health</dt>
+                    <dd class="col-sm-9">@listing.Health</dd>
+                </dl>
+
+                <!-- Delete Form -->
+                <EditForm method="post" Model="listing" OnValidSubmit="DeleteListing" FormName="delete" Enhance>
+                    <div class="d-flex justify-content-center mt-4">
+                        <button type="submit" class="btn btn-danger btn-lg" disabled="@(listing is null)">
+                            <i class="bi bi-trash me-2"></i> Delete Listing
+                        </button>
+                    </div>
+                </EditForm>
+            }
+        </div>
+    </div>
+
+    <!-- Back Link -->
+    <div class="text-center mt-4">
+        <a href="/dog" class="btn btn-secondary btn-sm">
+            <i class="bi bi-arrow-left-circle me-2"></i> Back to Listings
+        </a>
+    </div>
 </div>
 
 @code {
@@ -82,6 +110,6 @@
         using var context = DbFactory.CreateDbContext();
         context.Listing.Remove(listing!);
         await context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/listings");
+        NavigationManager.NavigateTo("/dog");
     }
 }

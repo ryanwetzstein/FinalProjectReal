@@ -4,77 +4,105 @@
 @inject IDbContextFactory<FinalProject.Data.FinalProjectContext> DbFactory
 @inject NavigationManager NavigationManager
 
-<PageTitle>Edit</PageTitle>
+<PageTitle>Edit Listing</PageTitle>
 
-<h1>Edit</h1>
-
-<h2>Listing</h2>
-<hr />
-@if (Listing is null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <div class="row">
-        <div class="col-md-4">
-            <EditForm method="post" Model="Listing" OnValidSubmit="UpdateListing" FormName="edit" Enhance>
-                <DataAnnotationsValidator />
-                <ValidationSummary role="alert"/>
-                <input type="hidden" name="Listing.Id" value="@Listing.Id" />
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name:</label>
-                    <InputText id="name" @bind-Value="Listing.Name" class="form-control" aria-required="true"/>
-                    <ValidationMessage For="() => Listing.Name" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="breed" class="form-label">Breed:</label>
-                    <InputText id="breed" @bind-Value="Listing.Breed" class="form-control" aria-required="true"/>
-                    <ValidationMessage For="() => Listing.Breed" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="age" class="form-label">Age:</label>
-                    <InputNumber id="age" @bind-Value="Listing.Age" class="form-control" aria-required="true"/>
-                    <ValidationMessage For="() => Listing.Age" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="size" class="form-label">Size:</label>
-                    <InputText id="size" @bind-Value="Listing.Size" class="form-control" aria-required="true"/>
-                    <ValidationMessage For="() => Listing.Size" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="location" class="form-label">Location:</label>
-                    <InputText id="location" @bind-Value="Listing.Location" class="form-control" aria-required="true"/>
-                    <ValidationMessage For="() => Listing.Location" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description:</label>
-                    <InputText id="description" @bind-Value="Listing.Description" class="form-control" aria-required="true"/>
-                    <ValidationMessage For="() => Listing.Description" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="imageurl" class="form-label">ImageUrl:</label>
-                    <InputText id="imageurl" @bind-Value="Listing.ImageUrl" class="form-control" aria-required="true"/>
-                    <ValidationMessage For="() => Listing.ImageUrl" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="temperance" class="form-label">Temperance:</label>
-                    <InputText id="temperance" @bind-Value="Listing.Temperance" class="form-control" />
-                    <ValidationMessage For="() => Listing.Temperance" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="health" class="form-label">Health:</label>
-                    <InputText id="health" @bind-Value="Listing.Health" class="form-control" />
-                    <ValidationMessage For="() => Listing.Health" class="text-danger" />
-                </div>
-                <button type="submit" class="btn btn-primary">Save</button>
-            </EditForm>
-        </div>
+<!-- Blue and Black Navbar -->
+<div class="top-row ps-3 navbar navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Doggy Domain</a>
     </div>
-}
+</div>
 
-<div>
-    <a href="/listings">Back to List</a>
+<!-- Main Container -->
+<div class="container mt-5">
+    <h1 class="text-center text-primary mb-4">Edit Listing</h1>
+
+    @if (Listing is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <!-- Form Section (Card with Shadow) -->
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <EditForm method="post" Model="Listing" OnValidSubmit="UpdateListing" FormName="edit" Enhance>
+                    <DataAnnotationsValidator />
+                    <ValidationSummary role="alert" />
+
+                    <!-- Hidden Field for ID -->
+                    <input type="hidden" name="Listing.Id" value="@Listing.Id" />
+
+                    <!-- Form Inputs -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name:</label>
+                        <InputText id="name" @bind-Value="Listing.Name" class="form-control" aria-required="true" />
+                        <ValidationMessage For="() => Listing.Name" class="text-danger" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="breed" class="form-label">Breed:</label>
+                        <InputText id="breed" @bind-Value="Listing.Breed" class="form-control" aria-required="true" />
+                        <ValidationMessage For="() => Listing.Breed" class="text-danger" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="age" class="form-label">Age:</label>
+                        <InputNumber id="age" @bind-Value="Listing.Age" class="form-control" aria-required="true" />
+                        <ValidationMessage For="() => Listing.Age" class="text-danger" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="size" class="form-label">Size:</label>
+                        <InputText id="size" @bind-Value="Listing.Size" class="form-control" aria-required="true" />
+                        <ValidationMessage For="() => Listing.Size" class="text-danger" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location:</label>
+                        <InputText id="location" @bind-Value="Listing.Location" class="form-control" aria-required="true" />
+                        <ValidationMessage For="() => Listing.Location" class="text-danger" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description:</label>
+                        <InputText id="description" @bind-Value="Listing.Description" class="form-control" aria-required="true" />
+                        <ValidationMessage For="() => Listing.Description" class="text-danger" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="imageurl" class="form-label">Image URL:</label>
+                        <InputText id="imageurl" @bind-Value="Listing.ImageUrl" class="form-control" aria-required="true" />
+                        <ValidationMessage For="() => Listing.ImageUrl" class="text-danger" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="temperance" class="form-label">Temperance:</label>
+                        <InputText id="temperance" @bind-Value="Listing.Temperance" class="form-control" />
+                        <ValidationMessage For="() => Listing.Temperance" class="text-danger" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="health" class="form-label">Health:</label>
+                        <InputText id="health" @bind-Value="Listing.Health" class="form-control" />
+                        <ValidationMessage For="() => Listing.Health" class="text-danger" />
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                        Save Changes
+                    </button>
+                </EditForm>
+            </div>
+        </div>
+    }
+
+    <!-- Back to List Button -->
+    <div class="text-center mt-4">
+        <a href="/dog" class="btn btn-secondary btn-lg">
+            <i class="bi bi-arrow-left-circle me-2"></i> Back to Listings
+        </a>
+    </div>
 </div>
 
 @code {
@@ -95,8 +123,7 @@ else
         }
     }
 
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    // Method to update the listing
     private async Task UpdateListing()
     {
         using var context = DbFactory.CreateDbContext();
@@ -118,9 +145,10 @@ else
             }
         }
 
-        NavigationManager.NavigateTo("/listings");
+        NavigationManager.NavigateTo("/dog");
     }
 
+    // Check if listing exists
     private bool ListingExists(int id)
     {
         using var context = DbFactory.CreateDbContext();

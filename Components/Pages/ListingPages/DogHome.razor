@@ -1,0 +1,184 @@
+﻿@page "/dog"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using FinalProject.Models
+@using FinalProject.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<FinalProject.Data.FinalProjectContext> DbFactory
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize]
+
+<style>
+    /* Use system sans-serif font for a clean, modern look */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* System font stack */
+    }
+
+    /* Styling for the top-row and navbar */
+    .top-row {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .navbar {
+        background-color: #003366; /* Blue background */
+    }
+
+        .navbar .navbar-brand {
+            font-size: 1.5rem;
+            color: #fff;
+            font-weight: bold;
+            text-transform: none; /* Reverted text-transform */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Default system font */
+        }
+
+    /* Container Styling */
+    .container {
+        margin-top: 30px;
+    }
+
+    /* Button Styles */
+    .btn-dark {
+        background-color: #333;
+        color: #fff;
+    }
+
+    /* Table styling for better visibility */
+    .table-responsive {
+        margin-top: 20px;
+        overflow-x: auto; /* Ensure horizontal scroll */
+    }
+
+    /* Action buttons placed outside the sidebar */
+    .action-buttons a {
+        margin-left: 10px;
+        margin-right: 10px;
+        font-size: 0.9rem; /* Slightly smaller text size */
+        padding: 8px 16px;
+    }
+
+    .action-buttons .btn-warning {
+        background-color: #f0ad4e;
+        color: white;
+    }
+
+    .action-buttons .btn-info {
+        background-color: #5bc0de;
+        color: white;
+    }
+
+    .action-buttons .btn-danger {
+        background-color: #d9534f;
+        color: white;
+    }
+
+    /* Table Text Styling */
+    .table th, .table td {
+        vertical-align: middle; /* Vertically center text */
+        font-size: 1rem;
+        color: #333; /* Darker text color for better contrast */
+    }
+
+    /* Styling for the Table Header */
+    .table th {
+        background-color: #003366;
+        color: #fff;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    /* Enhanced text styling for headers */
+    h1 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #003366; /* Dark blue color */
+        font-size: 2rem; /* Slightly larger font for heading */
+        font-weight: 600;
+    }
+
+    /* Hiding the ImageUrl column */
+    .hidden-column {
+        display: none;
+    }
+
+    /* For links */
+    .about-us-link {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 700;
+        font-size: 1rem;
+        text-transform: uppercase;
+        color: #ffffff;
+        background-color: #333;
+        padding: 8px 20px;
+        border-radius: 20px;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .about-us-link:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .about-us-link:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+        }
+
+</style>
+
+<!-- Blue and Black Navbar with Original Logo -->
+<div class="top-row ps-3 navbar navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Doggy Domain</a> <!-- Reverted text style -->
+    </div>
+</div>
+
+<br />
+<br />
+
+<!-- Main Container with Blue and Black Theme -->
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-dark">Listings</h1>
+        <a href="listings/create" class="btn btn-dark">
+            Create New Listing
+        </a>
+    </div>
+
+    <!-- Action Buttons placed outside the table -->
+    <div class="action-buttons text-end">
+        <QuickGrid Class="table table-striped table-hover" Items="context.Listing">
+            <PropertyColumn Property="listing => listing.Name" />
+            <PropertyColumn Property="listing => listing.Breed" />
+            <PropertyColumn Property="listing => listing.Age" />
+            <PropertyColumn Property="listing => listing.Size" />
+            <PropertyColumn Property="listing => listing.Location" />
+            <PropertyColumn Property="listing => listing.Description" />
+            <!-- Hide ImageUrl Column -->
+            <PropertyColumn Property="listing => listing.ImageUrl" Class="hidden-column" />
+            <PropertyColumn Property="listing => listing.Temperance" />
+            <PropertyColumn Property="listing => listing.Health" />
+
+            <!-- Action Buttons for each listing row -->
+            <TemplateColumn Context="listing">
+                <a href="@($"listings/edit?id={listing.Id}")" class="btn btn-warning btn-sm">Edit</a>
+                <a href="@($"listings/details?id={listing.Id}")" class="btn btn-info btn-sm">Details</a>
+                <a href="@($"listings/delete?id={listing.Id}")" class="btn btn-danger btn-sm">Delete</a>
+            </TemplateColumn>
+        </QuickGrid>
+    </div>
+</div>
+
+@code {
+    private Listing? listing;
+    private FinalProjectContext context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}
