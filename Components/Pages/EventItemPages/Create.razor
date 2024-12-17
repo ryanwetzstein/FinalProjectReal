@@ -1,0 +1,64 @@
+﻿@page "/eventitems/create"
+@using Microsoft.EntityFrameworkCore
+@using FinalProject.Models
+@inject IDbContextFactory<FinalProject.Data.FinalProjectContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>EventItem</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="EventItem" OnValidSubmit="AddEventItem" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="title" class="form-label">Title:</label> 
+                <InputText id="title" @bind-Value="EventItem.Title" class="form-control" aria-required="true"/> 
+                <ValidationMessage For="() => EventItem.Title" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="description" class="form-label">Description:</label> 
+                <InputText id="description" @bind-Value="EventItem.Description" class="form-control" aria-required="true"/> 
+                <ValidationMessage For="() => EventItem.Description" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="date" class="form-label">Date:</label> 
+                <InputText id="date" @bind-Value="EventItem.Date" class="form-control" aria-required="true"/> 
+                <ValidationMessage For="() => EventItem.Date" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="timestart" class="form-label">TimeStart:</label> 
+                <InputText id="timestart" @bind-Value="EventItem.TimeStart" class="form-control" aria-required="true"/> 
+                <ValidationMessage For="() => EventItem.TimeStart" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="timeend" class="form-label">TimeEnd:</label> 
+                <InputText id="timeend" @bind-Value="EventItem.TimeEnd" class="form-control" aria-required="true"/> 
+                <ValidationMessage For="() => EventItem.TimeEnd" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/eventitems">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private EventItem EventItem { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddEventItem()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.EventItem.Add(EventItem);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/eventitems");
+    }
+}

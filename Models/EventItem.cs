@@ -2,7 +2,7 @@
 
 namespace FinalProject.Models
 {
-    public class Event
+    public class EventItem
     {
         public int Id { get; set; }
 

@@ -1,0 +1,109 @@
+﻿@page "/eventitems/edit"
+@using Microsoft.EntityFrameworkCore
+@using FinalProject.Models
+@inject IDbContextFactory<FinalProject.Data.FinalProjectContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>EventItem</h2>
+<hr />
+@if (EventItem is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="EventItem" OnValidSubmit="UpdateEventItem" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary role="alert"/>
+                <input type="hidden" name="EventItem.Id" value="@EventItem.Id" />
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title:</label>
+                    <InputText id="title" @bind-Value="EventItem.Title" class="form-control" aria-required="true"/>
+                    <ValidationMessage For="() => EventItem.Title" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <InputText id="description" @bind-Value="EventItem.Description" class="form-control" aria-required="true"/>
+                    <ValidationMessage For="() => EventItem.Description" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="date" class="form-label">Date:</label>
+                    <InputText id="date" @bind-Value="EventItem.Date" class="form-control" aria-required="true"/>
+                    <ValidationMessage For="() => EventItem.Date" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="timestart" class="form-label">TimeStart:</label>
+                    <InputText id="timestart" @bind-Value="EventItem.TimeStart" class="form-control" aria-required="true"/>
+                    <ValidationMessage For="() => EventItem.TimeStart" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="timeend" class="form-label">TimeEnd:</label>
+                    <InputText id="timeend" @bind-Value="EventItem.TimeEnd" class="form-control" aria-required="true"/>
+                    <ValidationMessage For="() => EventItem.TimeEnd" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/eventitems">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private EventItem? EventItem { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        EventItem ??= await context.EventItem.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (EventItem is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdateEventItem()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(EventItem!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!EventItemExists(EventItem!.Id))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/eventitems");
+    }
+
+    private bool EventItemExists(int id)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.EventItem.Any(e => e.Id == id);
+    }
+}

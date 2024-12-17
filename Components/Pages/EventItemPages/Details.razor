@@ -1,0 +1,54 @@
+﻿@page "/eventitems/details"
+@using Microsoft.EntityFrameworkCore
+@using FinalProject.Models
+@inject IDbContextFactory<FinalProject.Data.FinalProjectContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>EventItem</h2>
+    <hr />
+    @if (eventitem is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Title</dt>
+            <dd class="col-sm-10">@eventitem.Title</dd>
+            <dt class="col-sm-2">Description</dt>
+            <dd class="col-sm-10">@eventitem.Description</dd>
+            <dt class="col-sm-2">Date</dt>
+            <dd class="col-sm-10">@eventitem.Date</dd>
+            <dt class="col-sm-2">TimeStart</dt>
+            <dd class="col-sm-10">@eventitem.TimeStart</dd>
+            <dt class="col-sm-2">TimeEnd</dt>
+            <dd class="col-sm-10">@eventitem.TimeEnd</dd>
+        </dl>
+        <div>
+            <a href="@($"/eventitems/edit?id={eventitem.Id}")">Edit</a> |
+            <a href="@($"/eventitems")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private EventItem? eventitem;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        eventitem = await context.EventItem.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (eventitem is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

@@ -1,0 +1,42 @@
+﻿@page "/eventitems/view"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using FinalProject.Models
+@using FinalProject.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<FinalProject.Data.FinalProjectContext> DbFactory
+
+<PageTitle>View Events</PageTitle>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<h1 style="font-family: 'Roboto', sans-serif; font-weight: 700;">Events</h1>
+@foreach (var eventItem in Events)
+{
+    <div class="container mt-12">
+        <div class="card" style="font-family: 'Roboto', sans-serif;">
+            <div class="card-body">
+                <h3 style="font-size: 30px; font-weight: bold;">@eventItem.Title</h3>
+                <h4 style="font-size: 20px;">@eventItem.Description</h4>
+                <h4 style="font-size: 20px; font-weight: bold">@eventItem.Date   @eventItem.TimeStart - @eventItem.TimeEnd</h4>
+            </div>
+        </div>
+    </div>
+}
+@code {
+    private FinalProjectContext context = default!;
+
+    private List<EventItem> Events { get; set; } = new List<EventItem>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch all events from the database
+        Events = await context.EventItem.ToListAsync();
+    }
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}
