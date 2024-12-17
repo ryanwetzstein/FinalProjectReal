@@ -57,8 +57,6 @@ namespace FinalProject
 
                 SeedData.InitializeEvent(services);
                 SeedData.InitializeShelter(services);
-            }
-                SeedData.InitializeEvent(services);
 				SeedData.InitializeListing(services);
 			}
 

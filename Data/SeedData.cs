@@ -3,13 +3,6 @@ using FinalProject.Models;
 
 namespace FinalProject.Data
 {
-	public class SeedData
-	{
-		public static void InitializeEvent(IServiceProvider serviceProvider)
-		{
-			using var context = new FinalProjectContext(
-				serviceProvider.GetRequiredService<
-					DbContextOptions<FinalProjectContext>>());
     public class SeedData
     {
         public static void InitializeEvent(IServiceProvider serviceProvider)
@@ -79,7 +72,6 @@ namespace FinalProject.Data
 			context.Listing.AddRange(
 				new Listing
 				{
-					Id = 1,
 					Name = "Confuscious",
 					Breed = "Dachshund",
 					Age = 3,
@@ -92,7 +84,6 @@ namespace FinalProject.Data
 				},
 				new Listing
 				{
-					Id = 2,
 					Name = "Chiquito",
 					Breed = "Terrier Mix",
 					Age = 3,
@@ -105,7 +96,6 @@ namespace FinalProject.Data
 				},
 				new Listing
 				{
-					Id = 3,
 					Name = "Pubert",
 					Breed = "Mixed Breed",
 					Age = 2,
@@ -118,7 +108,6 @@ namespace FinalProject.Data
 				},
 				new Listing
 				{
-					Id = 4,
 					Name = "Luna",
 					Breed = "Great Dane",
 					Age = 4,
@@ -131,7 +120,6 @@ namespace FinalProject.Data
 				},
 				new Listing
 				{
-					Id = 5,
 					Name = "Max",
 					Breed = "Border Collie Mix",
 					Age = 2,
@@ -144,7 +132,6 @@ namespace FinalProject.Data
 				},
 				new Listing
 				{
-					Id = 6,
 					Name = "Bella",
 					Breed = "Labrador Retriever",
 					Age = 2,
@@ -157,7 +144,6 @@ namespace FinalProject.Data
 				},
 				new Listing
 				{
-					Id = 7,
 					Name = "Rocky",
 					Breed = "German Shepherd",
 					Age = 5,
@@ -170,7 +156,6 @@ namespace FinalProject.Data
 				},
 				new Listing
 				{
-					Id = 8,
 					Name = "Daisy \"The Golden Wiener\"",
 					Breed = "Golden Retriever Dachshund Mix",
 					Age = 1,
@@ -185,9 +170,6 @@ namespace FinalProject.Data
 
 			context.SaveChanges();
 		}
-	}
-            context.SaveChanges();
-        }
 
         public static void InitializeShelter(IServiceProvider serviceProvider)
         {
