@@ -15,6 +15,24 @@
     <h1 style="font-family: 'Roboto', sans-serif; font-weight: 700;">Adoptable Dogs</h1>
 </div>
 
+<!-- Search Bar Section (Side by Side) -->
+<div class="container mt-4">
+    <div class="row">
+        <form action="/viewdogs" method="get" class="d-flex justify-content-between">
+            <div class="col-md-4">
+                <input type="search" name="breedFilter" placeholder="Search by Breed" value="@BreedFilter" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="ageFilter" placeholder="Search by Age (Number)" value="@AgeFilter" class="form-control" />
+            </div>
+            <div class="col-md-2 d-flex align-items-center">
+                <input type="submit" value="Search" class="btn btn-primary w-100" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
 <!-- Container for Grid with 3 Dogs -->
 <div class="container mt-4">
     <div class="row">
@@ -36,18 +54,59 @@
 </div>
 
 @code {
+    // List of dogs to loop through
+    // private List<DogProfile> dogs = new List<DogProfile>
+    // {
+    //     new DogProfile
+    //     {
+    //         Name = "Confuscious",
+    //         ImageUrl = "https:www.boredpanda.com/blog/wp-content/uploads/2023/04/644a230e3f5d4_l7ink8py2vta1__700.jpg",
+    //         ProfileUrl = "/profile/confuscious"
+    //     },
+    //     new DogProfile
+    //     {
+    //         Name = "Pubert",
+    //         ImageUrl = "https:images.squarespace-cdn.com/content/v1/597cbe61f14aa1fbe78b4821/1567103219792-B73ICD6B7HE0G7QZXDN9/dog+trainer+norman+oklahoma.jpg",
+    //         ProfileUrl = "/profile/pubert"
+    //     },
+    //     new DogProfile
+    //     {
+    //         Name = "Chiquito",
+    //         ImageUrl = "https:images.saymedia-content.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MjA2NjY5MjQ4Mzg1MjYyNzk2/why-would-a-house-trained-dog-start-pooping-in-the-house.jpg",
+    //         ProfileUrl = "/profile/chiquito"
+    //     }
+    // };
+    [SupplyParameterFromQuery]
+    private string? BreedFilter { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? AgeFilter { get; set; }
+
     private FinalProjectContext context = default!;
     private List<Listing> Listings { get; set; } = new List<Listing>();
-
-    protected override async Task OnInitializedAsync()
-    {
-        // Fetch all dogs from the database
-        Listings = await context.Listing.ToListAsync();
-    }
 
     protected override void OnInitialized()
     {
         context = DbFactory.CreateDbContext();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        IQueryable<Listing> query = context.Listing;
+
+        // Apply breed filter if provided
+        if (!string.IsNullOrEmpty(BreedFilter))
+        {
+            query = query.Where(l => EF.Functions.Like(l.Breed, "%" + BreedFilter.ToLower() + "%"));
+        }
+
+        // Apply age filter if a valid integer is provided
+        if (!string.IsNullOrEmpty(AgeFilter) && int.TryParse(AgeFilter, out var age))
+        {
+            query = query.Where(l => l.Age == age);
+        }
+
+        Listings = await query.ToListAsync();
     }
 
     public async ValueTask DisposeAsync() => await context.DisposeAsync();
