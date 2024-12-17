@@ -56,6 +56,9 @@ namespace FinalProject
                 var services = scope.ServiceProvider;
 
                 SeedData.InitializeEvent(services);
+                SeedData.InitializeShelter(services);
+            }
+                SeedData.InitializeEvent(services);
 				SeedData.InitializeListing(services);
 			}
 

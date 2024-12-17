@@ -10,14 +10,14 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <h1 style="font-family: 'Roboto', sans-serif; font-weight: 700; text-align: center; text-decoration: underline overline;">EVENTS</h1>
-@foreach (var eventItem in Events)
+@foreach (var shelterItem in Shelters)
 {
     <div class="container mt-12">
         <div class="card" style="font-family: 'Roboto', sans-serif;">
             <div class="card-body">
-                <h3 style="font-size: 30px; font-weight: bold; color: #1861ac;">@eventItem.Title</h3>
-                <h4 style="font-size: 20px;">@eventItem.Description</h4>
-                <h4 style="font-size: 20px; font-weight: bold">@eventItem.Date &nbsp;from&nbsp; @eventItem.TimeStart - @eventItem.TimeEnd</h4>
+                <h3 style="font-size: 30px; font-weight: bold; color: #1861ac;">@shelterItem.Name</h3>
+                <h4 style="font-size: 20px;">@shelterItem.Email</h4>
+                <h4 style="font-size: 20px; font-weight: bold">@shelterItem.PhoneNumber</h4>
             </div>
         </div>
     </div>
@@ -25,12 +25,12 @@
 @code {
     private FinalProjectContext context = default!;
 
-    private List<EventItem> Events { get; set; } = new List<EventItem>();
+    private List<Shelter> Shelters { get; set; } = new List<Shelter>();
 
     protected override async Task OnInitializedAsync()
     {
         // Fetch all events from the database
-        Events = await context.EventItem.ToListAsync();
+        Shelters = await context.Shelter.ToListAsync();
     }
 
     protected override void OnInitialized()
