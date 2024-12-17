@@ -44,7 +44,8 @@
                     <img src="@dog.ImageUrl" class="card-img-top" alt="@dog.Name" style="width: 250px; height: 250px; object-fit: cover;">
                     <div class="card-body text-center">
                         <h5 class="card-title">@dog.Name</h5>
-                        <a href="/profile/confuscious" class="btn btn-primary">View Profile</a>
+                        <!-- Dynamically set the href to go to the dog's profile page using the Id -->
+                        <a href="/profile/@dog.Id" class="btn btn-primary">View Profile</a>
                     </div>
                 </div>
             </div>
@@ -82,7 +83,6 @@
     private string? AgeFilter { get; set; }
 
     private FinalProjectContext context = default!;
-
     private List<Listing> Listings { get; set; } = new List<Listing>();
 
     protected override void OnInitialized()

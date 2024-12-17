@@ -1,6 +1,27 @@
 ﻿@page "/profile/luna"
 <h2 class="text-center">Meet Luna: The Gentle Giant</h2>
 
+<div class="text-center mt-4">
+    <img src="https://cdn2.thedogclinic.com/wp-content/uploads/2021/04/gentle-dog-breeds.jpg"
+         alt="Luna"
+         class="img-fluid"
+         style="width: 500px; height: 500px; object-fit: cover;">
+</div>
+
+<div class="container mt-4">
+    <p>
+        Luna is a 4-year-old Great Dane with a heart as big as her paws. Despite her size, she’s a gentle and affectionate companion who thrives on human interaction.
+    </p>
+    <p>
+        She loves long naps, short walks, and lounging on the couch with her favorite humans. Luna is great with kids and other dogs, making her the perfect addition to a loving family.
+    </p>
+    <div class="text-center mt-3">
+        <form action="/submit" method="POST">
+            <button type="submit" class="btn btn-primary" onclick="window.location.href='/application-page'; return false;">Submit Application</button>
+        </form>
+    </div>
+</div>
+
 @code {
 
 }

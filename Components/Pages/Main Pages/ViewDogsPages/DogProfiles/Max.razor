@@ -1,5 +1,26 @@
 ﻿@page "/profile/max"
-<h3>Max</h3>
+<h2 class="text-center">Meet Max: The Adventurer</h2>
+
+<div class="text-center mt-4">
+    <img src="https://images.unsplash.com/photo-1592197652418-64c6d2e2d886"
+         alt="Max"
+         class="img-fluid"
+         style="width: 500px; height: 500px; object-fit: cover;">
+</div>
+
+<div class="container mt-4">
+    <p>
+        Max is a spirited Border Collie mix who lives for adventure. Whether it’s hiking trails, chasing frisbees, or learning new tricks, Max is always up for a challenge.
+    </p>
+    <p>
+        He’s intelligent, energetic, and eager to please, making him the ideal companion for an active individual or family.
+    </p>
+    <div class="text-center mt-3">
+        <form action="/submit" method="POST">
+            <button type="submit" class="btn btn-primary" onclick="window.location.href='/application-page'; return false;">Submit Application</button>
+        </form>
+    </div>
+</div>
 
 @code {
 

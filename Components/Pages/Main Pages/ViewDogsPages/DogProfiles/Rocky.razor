@@ -1,5 +1,26 @@
 ﻿@page "/profile/rocky"
-<h3>Rocky</h3>
+<h2 class="text-center">Meet Rocky: The Survivor</h2>
+
+<div class="text-center mt-4">
+    <img src="https://images.unsplash.com/photo-1560807707-8cc77767d783"
+         alt="Rocky"
+         class="img-fluid"
+         style="width: 500px; height: 500px; object-fit: cover;">
+</div>
+
+<div class="container mt-4">
+    <p>
+        Rocky is a 5-year-old German Shepherd who has overcome incredible odds. Rescued from difficult circumstances, Rocky is now thriving and ready for his forever home.
+    </p>
+    <p>
+        He’s loyal, protective, and eager to bond with someone who appreciates his courageous spirit.
+    </p>
+    <div class="text-center mt-3">
+        <form action="/submit" method="POST">
+            <button type="submit" class="btn btn-primary" onclick="window.location.href='/application-page'; return false;">Submit Application</button>
+        </form>
+    </div>
+</div>
 
 @code {
 
