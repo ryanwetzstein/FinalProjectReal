@@ -88,8 +88,9 @@ namespace FinalProject
 			app.UseExceptionHandler("/Error");
 			app.UseHsts();
 
+            app.MapHub<ChatHub>("/chathub");
 
-			app.Run();
+            app.Run();
 		}
 	}
 }
