@@ -55,7 +55,8 @@ namespace FinalProject
             {
                 var services = scope.ServiceProvider;
 
-                SeedData.Initialize(services);
+                SeedData.InitializeEvent(services);
+                SeedData.InitializeShelter(services);
             }
 
             // Configure the HTTP request pipeline.
